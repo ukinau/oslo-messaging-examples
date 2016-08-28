@@ -11,14 +11,10 @@ class TestClient(object):
     self.client = oslo_messaging.RPCClient(transport, target)
 
   def hoge(self, ctxt, arg):
-    return self.client.call(ctxt, 'hoge', arg=arg)
-
-  def fuga(self, ctxt, arg):
     cctxt= self.client.prepare(namespace='foo', version='1.1')
-    return cctxt.call(ctxt, 'fuga', arg = arg)
+    return cctxt.call(ctxt, 'hoge', arg = arg)
 
 transport = oslo_messaging.get_transport(cfg.CONF, url = URL)
 client = TestClient(transport)
 
 print(client.hoge({}, 10))
-print(client.fuga({}, 10))

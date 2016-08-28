@@ -6,23 +6,17 @@ import time
 
 URL = 'rabbit://guest:guest@localhost:5672/'
 
-class TestEndpoint1(object):
+class TestEndpoint(object):
+  target = oslo_messaging.Target(namespace='foo', version='1.2')
+
   def hoge(self, ctx, arg):
     return arg * 2
 
-class TestEndpoint2(object):
-  target = oslo_messaging.Target(namespace='foo', version='1.2')
-      
-  def fuga(self, ctx, arg):
-    return arg *3 
 
 transport = oslo_messaging.get_transport(cfg.CONF, url = URL)
-
-# NOTE: The argument of 'server' is mandatory
 target = oslo_messaging.Target(topic='test01', server='server1')
 endpoints = [
-  TestEndpoint1(),
-  TestEndpoint2(),
+  TestEndpoint(),
 ]
 
 server = oslo_messaging.get_rpc_server(transport, target, endpoints)
