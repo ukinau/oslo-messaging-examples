@@ -7,7 +7,7 @@ import time
 URL = 'rabbit://guest:guest@localhost:5672/'
 
 class TestEndpoint1(object):
-  def test(self, ctx, arg):
+  def hoge(self, ctx, arg):
     return arg * 2
 
 class TestEndpoint2(object):
