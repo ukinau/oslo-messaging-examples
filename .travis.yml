@@ -1,0 +1,12 @@
+language: python
+python:
+  - "2.7"
+  - "3.3"
+install:
+  - pip install pytz
+  - pip install oslo.messaging
+services:
+  - rabbitmq
+notifications:
+  email: user.localhost2000@gmail.com
+script: python -m unittest discover tests --pattern=*.py
