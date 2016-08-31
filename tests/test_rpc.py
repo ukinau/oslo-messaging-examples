@@ -2,8 +2,8 @@ import unittest
 import os, sys
 sys.path.append(os.path.dirname(__file__) + "/../src")
 
-import server
-import client
+import rpc_server as server
+import rpc_client as client
 import threading 
 
 class TestRPCProcessing(unittest.TestCase):
