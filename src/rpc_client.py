@@ -15,14 +15,14 @@ class TestClient(object):
     cctxt= self.client.prepare(namespace='foo', version='1.1')
     return cctxt.call(ctxt, 'hoge', arg = arg)
 
-def send_request(ctx, arg, topic=DEFAULT_TOPIC, server=DEFAULT_SERVER):
-  # parse CLI parameter and load configuration file
-  cfg.CONF()
-
-  transport = oslo_messaging.get_transport(cfg.CONF)
+def send_request(ctx, arg, topic=DEFAULT_TOPIC, server=DEFAULT_SERVER, url=''):
+  transport = oslo_messaging.get_transport(cfg.CONF, url=url)
   client = TestClient(transport, topic, server)
 
   return client.hoge(ctx, arg)
 
 if __name__ == '__main__':
+  # parse CLI parameter and load configuration file
+  cfg.CONF()
+
   print(send_request({}, 10))

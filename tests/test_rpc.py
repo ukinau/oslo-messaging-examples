@@ -13,7 +13,7 @@ class TestRPCProcessing(unittest.TestCase):
     REQUEST_VALUE = 20
 
     def start_server(self):
-        server.start_server(self.URL, self.TOPIC, self.SERVER)
+        server.start_server(self.TOPIC, self.SERVER, self.URL)
 
     def setUp(self):
         self.thread = threading.Thread(target = self.start_server)
@@ -27,5 +27,5 @@ class TestRPCProcessing(unittest.TestCase):
         self.thread.join()
 
     def test_send_request(self):
-        result = client.send_request({}, self.REQUEST_VALUE, self.URL, self.TOPIC)
+        result = client.send_request({}, self.REQUEST_VALUE, self.TOPIC, self.SERVER, self.URL)
         self.assertEqual(result, self.REQUEST_VALUE * 2)

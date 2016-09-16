@@ -14,11 +14,8 @@ class TestEndpoint(object):
     print("[TestEndpoint] hoge(%s, %d) is called" % (ctx, arg))
     return arg * 2
 
-def start_server(tgt_topic = DEFAULT_TOPIC, tgt_server = DEFAULT_SERVER):
-  # parse CLI parameter and load configuration file
-  cfg.CONF()
-
-  transport = oslo_messaging.get_transport(cfg.CONF)
+def start_server(tgt_topic = DEFAULT_TOPIC, tgt_server = DEFAULT_SERVER, url=''):
+  transport = oslo_messaging.get_transport(cfg.CONF, url=url)
   target = oslo_messaging.Target(topic=tgt_topic, server=tgt_server)
   endpoints = [
     TestEndpoint(),
@@ -36,4 +33,7 @@ def start_server(tgt_topic = DEFAULT_TOPIC, tgt_server = DEFAULT_SERVER):
     print("[ERROR] faield to start server '%s'" % (e.message))
 
 if __name__ == '__main__':
+  # parse CLI parameter and load configuration file
+  cfg.CONF()
+
   start_server()
