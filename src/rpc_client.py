@@ -3,7 +3,8 @@
 from oslo_config import cfg
 import oslo_messaging 
 
-URL = 'rabbit://guest:guest@localhost:5672/'
+DEFAULT_TOPIC = 'oslo-test1'
+DEFAULT_SERVER = 'localhost'
 
 class TestClient(object):
   def __init__(self, transport, tgt_topic, tgt_server):
@@ -14,11 +15,14 @@ class TestClient(object):
     cctxt= self.client.prepare(namespace='foo', version='1.1')
     return cctxt.call(ctxt, 'hoge', arg = arg)
 
-def send_request(ctx, arg, driver_url, topic, server=''):
-    transport = oslo_messaging.get_transport(cfg.CONF, url = driver_url)
-    client = TestClient(transport, topic, server)
+def send_request(ctx, arg, topic=DEFAULT_TOPIC, server=DEFAULT_SERVER):
+  # parse CLI parameter and load configuration file
+  cfg.CONF()
 
-    return client.hoge(ctx, arg)
+  transport = oslo_messaging.get_transport(cfg.CONF)
+  client = TestClient(transport, topic, server)
+
+  return client.hoge(ctx, arg)
 
 if __name__ == '__main__':
-    print(send_request({}, 10, URL, 'oslo01'))
+  print(send_request({}, 10))
