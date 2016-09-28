@@ -7,22 +7,22 @@ DEFAULT_TOPIC = 'oslo-test1'
 DEFAULT_SERVER = 'localhost'
 
 class TestClient(object):
-  def __init__(self, transport, tgt_topic, tgt_server):
-    target = oslo_messaging.Target(topic=tgt_topic, server=tgt_server)
-    self.client = oslo_messaging.RPCClient(transport, target)
+    def __init__(self, transport, tgt_topic, tgt_server):
+        target = oslo_messaging.Target(topic=tgt_topic, server=tgt_server)
+        self.client = oslo_messaging.RPCClient(transport, target)
 
-  def hoge(self, ctxt, arg):
-    cctxt= self.client.prepare(namespace='foo', version='1.1')
-    return cctxt.call(ctxt, 'hoge', arg = arg)
+    def hoge(self, ctxt, arg):
+        cctxt= self.client.prepare(namespace='foo', version='1.1')
+        return cctxt.call(ctxt, 'hoge', arg = arg)
 
 def send_request(ctx, arg, topic=DEFAULT_TOPIC, server=DEFAULT_SERVER, url=''):
-  transport = oslo_messaging.get_transport(cfg.CONF, url=url)
-  client = TestClient(transport, topic, server)
+    transport = oslo_messaging.get_transport(cfg.CONF, url=url)
+    client = TestClient(transport, topic, server)
 
-  return client.hoge(ctx, arg)
+    return client.hoge(ctx, arg)
 
 if __name__ == '__main__':
-  # parse CLI parameter and load configuration file
-  cfg.CONF()
+    # parse CLI parameter and load configuration file
+    cfg.CONF()
 
-  print(send_request({}, 10))
+    print(send_request({}, 10))

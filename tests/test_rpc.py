@@ -1,19 +1,19 @@
+import os
+import sys
+import threading
 import unittest
-import os, sys
 sys.path.append(os.path.dirname(__file__) + "/../src")
 
-import rpc_server as server
 import rpc_client as client
-import threading 
+import rpc_server as server
 
-class TestRPCProcessing(unittest.TestCase):
-    URL = 'rabbit://guest:guest@localhost:5672/'
-    TOPIC = 'solo-example-test'
+class TestRPC(unittest.TestCase):
+    TOPIC = 'oslo-example-test-for-rpc'
     SERVER = 'test'
     REQUEST_VALUE = 20
 
     def start_server(self):
-        server.start_server(self.TOPIC, self.SERVER, self.URL)
+        server.start_server(self.TOPIC, self.SERVER)
 
     def setUp(self):
         self.thread = threading.Thread(target = self.start_server)
@@ -27,5 +27,5 @@ class TestRPCProcessing(unittest.TestCase):
         self.thread.join()
 
     def test_send_request(self):
-        result = client.send_request({}, self.REQUEST_VALUE, self.TOPIC, self.SERVER, self.URL)
+        result = client.send_request({}, self.REQUEST_VALUE, self.TOPIC, self.SERVER)
         self.assertEqual(result, self.REQUEST_VALUE * 2)
