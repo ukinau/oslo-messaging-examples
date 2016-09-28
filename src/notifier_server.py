@@ -4,7 +4,7 @@ from oslo_config import cfg
 import oslo_messaging 
 
 class HogeEndpoint(object):
-  filter_rule = oslo_messaging.NotificationFilter(event_type='.*: hoge$')
+  filter_rule = oslo_messaging.NotificationFilter(event_type='event-hoge')
 
   def info(self, ctxt, publisher_id, event_type, payload, metadata):
     print("[HogeEndpoint] ctxt: %s" % (ctxt))
