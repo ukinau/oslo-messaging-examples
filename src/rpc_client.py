@@ -3,6 +3,10 @@
 from oslo_config import cfg
 import oslo_messaging 
 
+import eventlet
+
+eventlet.monkey_patch()
+
 DEFAULT_TOPIC = 'oslo-test1'
 DEFAULT_SERVER = 'localhost'
 
