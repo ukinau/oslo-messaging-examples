@@ -3,7 +3,7 @@ python:
   - "2.7"
   - "3.3"
 install:
-  - pip install pytz
+  - pip install pytz timeout_decorator
   - pip install oslo.messaging
 services:
   - rabbitmq
