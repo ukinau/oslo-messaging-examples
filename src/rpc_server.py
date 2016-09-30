@@ -3,10 +3,7 @@
 from oslo_config import cfg
 import oslo_messaging 
 
-import eventlet
 import time
-
-eventlet.monkey_patch()
 
 DEFAULT_TOPIC = 'oslo-test1'
 DEFAULT_SERVER = 'localhost'
@@ -14,8 +11,8 @@ DEFAULT_SERVER = 'localhost'
 class TestEndpoint(object):
     target = oslo_messaging.Target(namespace='foo', version='1.2')
 
-    def hoge(self, ctx, arg):
-        print("[TestEndpoint] hoge(%s, %d) is called" % (ctx, arg))
+    def hoge(self, ctxt, arg):
+        print("[TestEndpoint] hoge(%s, %d) is called" % (ctxt, arg))
         return arg * 2
 
 def start_server(tgt_topic = DEFAULT_TOPIC, tgt_server = DEFAULT_SERVER, url=''):
